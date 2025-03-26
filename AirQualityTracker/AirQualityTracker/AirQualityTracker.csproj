@@ -1,0 +1,86 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\ai.png" />
+    <None Remove="Images\air_quality.png" />
+    <None Remove="Images\average.png" />
+    <None Remove="Images\forecast.png" />
+    <None Remove="Images\leaf.png" />
+    <None Remove="Images\map.png" />
+    <None Remove="Images\map_pin.png" />
+    <None Remove="Images\pollution.png" />
+    <None Remove="Images\weather_condition.png" />
+    <None Remove="Resources\current_data.json" />
+    <None Remove="Resources\prediction_data.json" />
+    <None Remove="Resources\world.dbf" />
+    <None Remove="Resources\world.shp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\current_data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\prediction_data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\world.dbf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\world.shp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\pollution.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="*" />
+		<PackageReference Include="Syncfusion.SfChart.WPF" Version="*" />
+		<PackageReference Include="Syncfusion.SfMaps.WPF" Version="*" />
+		<PackageReference Include="Azure.AI.OpenAI" Version="*" />
+		<PackageReference Include="Azure.Identity" Version="*" />
+		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="9.0.1-preview.1.24570.5" />
+		<PackageReference Include="Syncfusion.SfTextInputLayout.WPF" Version="*" />
+		<PackageReference Include="Syncfusion.Shared.WPF" Version="*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Images\ai.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\air_quality.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\average.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\forecast.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\leaf.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\map.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\map_pin.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	  <Resource Include="Images\weather_condition.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Resource>
+	</ItemGroup>
+
+</Project>
