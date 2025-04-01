@@ -13,9 +13,16 @@ public class AzureAirQualityService
 {
     #region Properties
 
-    internal const string Endpoint = "YOUR_END_POINT_NAME";
-    internal const string DeploymentName = "DEPLOYMENT_NAME";
-    internal const string Key = "API_KEY";
+    //internal const string Endpoint = "YOUR_END_POINT_NAME";
+    //internal const string DeploymentName = "DEPLOYMENT_NAME";
+    //internal const string Key = "API_KEY";
+
+
+    internal const string Endpoint = "https://mobilemaui.openai.azure.com/";
+    internal const string DeploymentName = "gpt-4o";
+    internal const string Key = "6673b6975f334c79bd0db8a1cd70aa49";
+
+
     internal IChatClient? Client { get; set; }
     internal bool IsValid { get; set; }
 
@@ -25,7 +32,7 @@ public class AzureAirQualityService
 
     public AzureAirQualityService()
     {
-        ValidateCredential();
+        _ = ValidateCredential();
     } 
 
     #endregion
@@ -46,13 +53,11 @@ public class AzureAirQualityService
             else
             {
                 IsValid = false;
-                MessageBox.Show("Invalid Credential , The data has been retrieved from the previously loaded JSON file.");
             }
         }
         catch (Exception)
         {
             IsValid = false;
-            MessageBox.Show("Invalid Credential , The data has been retrieved from the previously loaded JSON file.");
         }
     }
 
@@ -90,6 +95,7 @@ public class AzureAirQualityService
         }
         catch (Exception)
         {
+            MessageBox.Show("Invalid Credential , The data has been retrieved from the previously loaded JSON file.");
             return GetCurrentDataFromEmbeddedJson();
         }
     }
@@ -125,6 +131,7 @@ public class AzureAirQualityService
         }
         catch (Exception)
         {
+            MessageBox.Show("Invalid Credential , The data has been retrieved from the previously loaded JSON file.");
             return GetPredictionFromEmbeddedJson();
         }
     }
@@ -164,12 +171,18 @@ public class AzureAirQualityService
         var executingAssembly = typeof(App).GetTypeInfo().Assembly;
 
         using (var stream = executingAssembly.GetManifestResourceStream("AirQualityTracker.Resources.current_data.json"))
-        using (var textStream = new StreamReader(stream))
         {
-            // Read the JSON content from the embedded resource
-            string json = textStream.ReadToEnd();
+            if (stream == null)
+            {
+                // Log or handle the missing resource scenario
+                return new List<AirQualityInfo>();
+            }
 
-            return JsonSerializer.Deserialize<List<AirQualityInfo>>(json) ?? new List<AirQualityInfo>();
+            using (var textStream = new StreamReader(stream))
+            {
+                string json = textStream.ReadToEnd();
+                return JsonSerializer.Deserialize<List<AirQualityInfo>>(json) ?? new List<AirQualityInfo>();
+            }
         }
     }
 
@@ -178,14 +191,21 @@ public class AzureAirQualityService
         var executingAssembly = typeof(App).GetTypeInfo().Assembly;
 
         using (var stream = executingAssembly.GetManifestResourceStream("AirQualityTracker.Resources.prediction_data.json"))
-        using (var textStream = new StreamReader(stream))
         {
-            // Read the JSON content from the embedded resource
-            string json = textStream.ReadToEnd();
+            if (stream == null)
+            {
+                // Log or handle the missing resource scenario
+                return new List<AirQualityInfo>();
+            }
 
-            return JsonSerializer.Deserialize<List<AirQualityInfo>>(json) ?? new List<AirQualityInfo>();
+            using (var textStream = new StreamReader(stream))
+            {
+                string json = textStream.ReadToEnd();
+                return JsonSerializer.Deserialize<List<AirQualityInfo>>(json) ?? new List<AirQualityInfo>();
+            }
         }
-    } 
+    }
+
 
     #endregion
 }

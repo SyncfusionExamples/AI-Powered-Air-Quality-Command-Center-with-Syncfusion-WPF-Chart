@@ -8,13 +8,13 @@ namespace AirQualityTracker
     {
         #region Fields
 
-        private readonly AzureAirQualityService _airQualityService;
+        private AzureAirQualityService? airQualityService;
         private string countryName = "New York";
         private bool isEnabled;
         private bool isBusy;
-        private ObservableCollection<AirQualityInfo> data;
-        private ObservableCollection<AirQualityInfo> foreCastData;
-        private ObservableCollection<AirQualityInfo> mapMarkers;
+        private ObservableCollection<AirQualityInfo>? data;
+        private ObservableCollection<AirQualityInfo>? foreCastData;
+        private ObservableCollection<AirQualityInfo>? mapMarkers;
         private string currentPollutionIndex = "Loading...";
         private string avgPollution7Days = "Loading...";
         private string aiPredictionAccuracy = "Loading...";
@@ -62,7 +62,7 @@ namespace AirQualityTracker
             }
         }
 
-        public ObservableCollection<AirQualityInfo> Data
+        public ObservableCollection<AirQualityInfo>? Data
         {
             get => data;
             set
@@ -72,7 +72,7 @@ namespace AirQualityTracker
             }
         }
 
-        public ObservableCollection<AirQualityInfo> ForeCastData
+        public ObservableCollection<AirQualityInfo>? ForeCastData
         {
             get => foreCastData;
             set
@@ -82,7 +82,7 @@ namespace AirQualityTracker
             }
         }
 
-        public ObservableCollection<AirQualityInfo> MapMarkers
+        public ObservableCollection<AirQualityInfo>? MapMarkers
         {
             get => mapMarkers;
             set
@@ -153,8 +153,6 @@ namespace AirQualityTracker
         {
             IsBusy = true;
             IsEnabled = true;
-            _airQualityService = new AzureAirQualityService();
-            FetchAirQualityData("New York"); // Auto-load on startup
         }
 
         #endregion
@@ -163,9 +161,11 @@ namespace AirQualityTracker
 
         internal async Task FetchAirQualityData(string countryName)
         {
+            airQualityService = new AzureAirQualityService();
+
             IsBusy = true;
 
-            var newData = await _airQualityService.PredictAirQualityTrends(countryName);
+            var newData = await airQualityService.PredictAirQualityTrends(countryName);
             Data = new ObservableCollection<AirQualityInfo>(newData);
 
             var singleMarker = Data.Select(d => new AirQualityInfo
@@ -190,7 +190,7 @@ namespace AirQualityTracker
         {
             IsBusy = true;
 
-            var historicalData = Data.OrderByDescending(d => d.Date).Take(40)
+            var historicalData = Data?.OrderByDescending(d => d.Date).Take(40)
                 .Select(d => new AirQualityInfo
                 {
                     Date = d.Date,
@@ -198,26 +198,31 @@ namespace AirQualityTracker
                 })
                 .ToList();
 
-            var forecastedData = await _airQualityService.PredictNextMonthForecast(historicalData);
+            if (airQualityService != null && historicalData != null)
+            {
+                var forecastedData = await airQualityService.PredictNextMonthForecast(historicalData);
 
-            ForeCastData = new ObservableCollection<AirQualityInfo>(forecastedData);
+                ForeCastData = new ObservableCollection<AirQualityInfo>(forecastedData);
+            }
 
             IsBusy = false;
         }
 
         internal async Task ValidateCredential()
         {
-
-            await _airQualityService.ValidateCredential();
-
-            if (!_airQualityService.IsValid)
+            if(airQualityService != null)
             {
-                IsEnabled = false;
-                CountryName = "New York";
-            }
-            else
-            {
-                IsEnabled = true;
+                await airQualityService.ValidateCredential();
+
+                if (!airQualityService.IsValid)
+                {
+                    IsEnabled = false;
+                    CountryName = "New York";
+                }
+                else
+                {
+                    IsEnabled = true;
+                }
             }
         }
 
@@ -246,7 +251,7 @@ namespace AirQualityTracker
         #region Property Changed Event
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
