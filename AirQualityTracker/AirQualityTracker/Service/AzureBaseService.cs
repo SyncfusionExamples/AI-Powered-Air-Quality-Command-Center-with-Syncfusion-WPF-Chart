@@ -13,16 +13,9 @@ public class AzureAirQualityService
 {
     #region Properties
 
-    //internal const string Endpoint = "YOUR_END_POINT_NAME";
-    //internal const string DeploymentName = "DEPLOYMENT_NAME";
-    //internal const string Key = "API_KEY";
-
-
-    internal const string Endpoint = "https://mobilemaui.openai.azure.com/";
-    internal const string DeploymentName = "gpt-4o";
-    internal const string Key = "6673b6975f334c79bd0db8a1cd70aa49";
-
-
+    internal const string Endpoint = "YOUR_END_POINT_NAME";
+    internal const string DeploymentName = "DEPLOYMENT_NAME";
+    internal const string Key = "API_KEY";
     internal IChatClient? Client { get; set; }
     internal bool IsValid { get; set; }
 
