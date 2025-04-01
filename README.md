@@ -19,7 +19,7 @@ This demo showcases an AI-enhanced air pollution monitoring system built using S
 - Interactive charts for historical trends
 - Seamless data integration with external sources
   
-![demo](https://github.com/user-attachments/assets/953dbe05-1c21-4273-92ff-34619f25a139)
+  ![demo](https://github.com/user-attachments/assets/e0e8d2f0-8165-4c14-b085-751e5f8b50ed)
 
 ## Why Use AI for Air Quality Monitoring?
 Traditional monitoring relies on sensor networks and government reports, which may not always provide real-time insights. By integrating Azure OpenAI with Syncfusion [WPF SfChart](https://www.syncfusion.com/wpf-controls/charts), our dashboard delivers instant and predictive air quality analytics, thereby improving decision-making for users.

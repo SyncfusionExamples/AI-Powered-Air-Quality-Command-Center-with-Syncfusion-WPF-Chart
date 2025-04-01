@@ -13,13 +13,20 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        this.Loaded += MainWindow_Loaded; ;
     }
+
+    private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        _ = viewModel.FetchAirQualityData("New York");
+    }
+
 
     private async void TextBox_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Enter)
         {
-            viewModel.ValidateCredential();
+            _ = viewModel.ValidateCredential();
 
             predictionButton.Background = Brushes.Transparent;
             busyIndicator.AnimationType = Syncfusion.Windows.Controls.Notification.AnimationTypes.Flower;
@@ -63,11 +70,14 @@ public partial class MainWindow : Window
     private void DateTimeAxis_LabelCreated(object sender, Syncfusion.UI.Xaml.Charts.LabelCreatedEventArgs e)
     {
         DateTimeAxisLabel? dateTimeLabel = e.AxisLabel as DateTimeAxisLabel;
-        bool isTransition = dateTimeLabel.IsTransition;
+        if (dateTimeLabel != null)
+        {
+            bool isTransition = dateTimeLabel.IsTransition;
 
-        if (isTransition)
-            e.AxisLabel.LabelContent = dateTimeLabel.Position.FromOADate().ToString("MMM-dd");
-        else
-            e.AxisLabel.LabelContent = dateTimeLabel.Position.FromOADate().ToString("dd");
+            if (isTransition)
+                e.AxisLabel.LabelContent = dateTimeLabel.Position.FromOADate().ToString("MMM-dd");
+            else
+                e.AxisLabel.LabelContent = dateTimeLabel.Position.FromOADate().ToString("dd");
+        }
     }
 }
