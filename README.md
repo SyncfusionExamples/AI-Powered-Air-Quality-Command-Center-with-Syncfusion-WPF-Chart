@@ -28,4 +28,4 @@ Traditional monitoring relies on sensor networks and government reports, which m
 ### Path too long exception
 If you are facing a path too long exception when building this example project, close Visual Studio and rename the repository to a shorter name before building the project.
 
-For a step-by-step procedure, refer to the [AI-Powered Air Pollution Monitor Dashboard Blog]().
+For a step-by-step procedure, refer to the [AI-Powered Air Pollution Monitor Dashboard Blog](https://www.syncfusion.com/blogs/post/air-quality-monitoring-with-wpf-chart).
