@@ -8,7 +8,7 @@ namespace AirQualityTracker
     {
         #region Fields
 
-        private AzureAirQualityService? airQualityService;
+        private AIAirQualityService? airQualityService;
         private string countryName = "New York";
         private bool isEnabled;
         private bool isBusy;
@@ -161,7 +161,7 @@ namespace AirQualityTracker
 
         internal async Task FetchAirQualityData(string countryName)
         {
-            airQualityService = new AzureAirQualityService();
+            airQualityService = new AIAirQualityService();
 
             IsBusy = true;
 

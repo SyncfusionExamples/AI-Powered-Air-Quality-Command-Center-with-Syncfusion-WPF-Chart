@@ -9,7 +9,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 
-public class AzureAirQualityService
+public class AIAirQualityService
 {
     #region Properties
 
@@ -23,7 +23,7 @@ public class AzureAirQualityService
 
     #region Constructor
 
-    public AzureAirQualityService()
+    public AIAirQualityService()
     {
         _ = ValidateCredential();
     } 
